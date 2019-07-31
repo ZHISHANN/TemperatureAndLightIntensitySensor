@@ -263,9 +263,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  lcdWriteMsg(0x80);
-	  lcdReadNibble(DATA_REG);
-	  /*lcdSetCustomLoc(0,LINE_1_ADDR,1);
+	  //lcdWriteMsg(0x80);
+	  //lcdReadNibble(DATA_REG);
+	  lcdSetCustomLoc(0,LINE_1_ADDR,1);
 	  //lcdDisplayString("Temperature:");
 	  //displayNextLine();
 	  ADC_Value = HAL_ADC_GetValue(&hadc1);
@@ -288,10 +288,10 @@ int main(void)
 	  lcdSetCustomLoc(9,LINE_2_ADDR,2);
 	  /*HAL_Delay(500);
 	  lcdClrScr();
-	  HAL_Delay(500);
+	  HAL_Delay(500);*/
 	  //lcdWriteMsg(0x41);
 	  HAL_Delay(1000);
-	  lcdReturnHome();*/
+	  lcdReturnHome();
 
     /* USER CODE END WHILE */
 
