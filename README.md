@@ -11,11 +11,11 @@ This project is about displaying the value of sensor in LCD screen.
 - Temperature Sensor (NTC), [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
 
 ## Connections
-Blue Pill MCU | Smart V2 MCU
---------------|-------------
-PB0           | R (NRST)
-PB12, PB14    | PA13 (SWDIO)
-PB13, PA5     | PA14 (SWCLK)
+|Blue Pill MCU | Smart V2 MCU|
+| :----------: |:-----------:|
+|PB0           | R (NRST)    |
+|PB12, PB14    | PA13 (SWDIO)|
+|PB13, PA5     | PA14 (SWCLK)|
 
 - PB0 of Blue Pill MCU should connected to a resistor of 110Ω before connect R of Smart V2 MCU.
 - PB14 of Blue Pill MCU also need to connected to a resistor of 110Ω before connect PA13 of Smart V2 MCU.
