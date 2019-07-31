@@ -76,14 +76,6 @@ void DelayUs(volatile uint32_t us)
 		us--;
 }
 
-void toggle()
-{
-	GPIOA->BSRR |= ENABLE_PIN_Pin;
-	//DelayUs(81);
-	DelayUs(2);
-	GPIOA->BRR |= ENABLE_PIN_Pin;
-}
-
 void lcdWriteNibble(uint8_t data)
 {
 	// write mode = 0
@@ -124,49 +116,6 @@ void lcdWriteCmd(uint8_t msg)
 {
 	GPIOA->BRR |= REG_SEL_Pin;
 	lcdWrite4BitData(msg);
-}
-
-uint8_t lcdReadNibble()
-{
-	uint8_t data = 0;
-
-	// read mode = 1
-	GPIOA->BSRR = READ_WRITE_Pin;
-
-	GPIOA->BSRR = REG_SEL_Pin;
-
-	// enable = 1
-	GPIOA->BSRR = ENABLE_PIN_Pin;
-	HAL_Delay(2);
-	/* Read high nibble first */
-	if (GPIOB->IDR & LCD_D4_Pin)
-		data |= 0x10;
-	if (GPIOB->IDR & LCD_D5_Pin)
-		data |= 0x20;
-	if (GPIOB->IDR & LCD_D6_Pin)
-		data |= 0x40;
-	if (GPIOB->IDR & LCD_D7_Pin)
-		data |= 0x80;
-	// enable = 0
-	GPIOA->BRR = ENABLE_PIN_Pin;
-	HAL_Delay(2);
-
-	// enable = 1
-	GPIOA->BSRR = ENABLE_PIN_Pin;
-	HAL_Delay(2);
-	/* Read low nibble */
-	if (GPIOB->IDR & LCD_D4_Pin)
-		data |= 0x01;
-	if (GPIOB->IDR & LCD_D5_Pin)
-		data |= 0x02;
-	if (GPIOB->IDR & LCD_D6_Pin)
-		data |= 0x04;
-	if (GPIOB->IDR & LCD_D7_Pin)
-		data |= 0x08;
-	// enable = 0
-	GPIOA->BRR = ENABLE_PIN_Pin;
-
-	return data;
 }
 
 void conver2Hex(int C)
