@@ -7,14 +7,6 @@
 
 #include "LCD.h"
 
-// wait LCD until it finish display
-uint8_t waitBusy()
-{
-	while(lcdRead(COMMAND_REG) & BUSY_FLAG);
-	DelayUs(BUSY_DELAY);
-	return lcdRead(COMMAND_REG);
-}
-
 void lcdDisplayString(char *msg) {
     while (msg[0] != '\0') {
     	lcdWriteMsg(msg[0]);
@@ -43,10 +35,10 @@ void lcdEntryMode()
 	lcdWriteCmd(ENTRY_MODE);
 }
 
-void lcdDisplayOn()
+void lcdDisplay(uint8_t displayStatus)
 {
 	// display on, cursor off
-	lcdWriteCmd(DIS_ON_CUR_OFF);
+	lcdWriteCmd(displayStatus);
 }
 
 void displayNextLine()
