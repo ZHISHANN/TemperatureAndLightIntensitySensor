@@ -72,7 +72,7 @@ void lcdReturnHome();
 void lcdDisplayString(char *msg);
 void lcdFuncSet();
 void lcdEntryMode();
-void lcdDisplayOn();
+void lcdDisplay(uint8_t displayStatus);
 void displayNextLine();
 void lcdSetLocation(uint8_t location, uint8_t line);
 void lcdSetCustomLoc(uint8_t position, uint8_t line, uint8_t data);
