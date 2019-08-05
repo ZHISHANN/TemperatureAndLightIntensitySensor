@@ -58,7 +58,7 @@ void lcdInit()
 {
 	lcdFuncSet();
 	//lcdClrScr();
-	lcdDisplayOn();
+	lcdDisplay(DIS_ON_CUR_OFF);
 	lcdEntryMode();
 	lcdClrScr();
 }
