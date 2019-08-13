@@ -28,13 +28,13 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Temperature_LightIntensity.elf
+all: TestSensor.elf
 
 # Tool invocations
-Temperature_LightIntensity.elf: $(OBJS) $(USER_OBJS) ../STM32F103CBTx_FLASH.ld
+TestSensor.elf: $(OBJS) $(USER_OBJS) ../STM32F103CBTx_FLASH.ld
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU GCC Linker'
-	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F103CBTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Temperature_LightIntensity.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -u _printf_float -T"../STM32F103CBTx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "TestSensor.elf" @"objects.list" $(USER_OBJS) $(LIBS) -lm
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
@@ -46,8 +46,8 @@ clean:
 
 post-build:
 	-@echo 'Generating hex and Printing size information:'
-	arm-none-eabi-objcopy -O ihex "Temperature_LightIntensity.elf" "Temperature_LightIntensity.hex"
-	arm-none-eabi-size "Temperature_LightIntensity.elf"
+	arm-none-eabi-objcopy -O ihex "TestSensor.elf" "TestSensor.hex"
+	arm-none-eabi-size "TestSensor.elf"
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -1,4 +1,3 @@
-Src/LCD.o: ../Src/LCD.c \
- E:/AGILE\ SOFTWARE\ DEVELOPMENT/Sensor/Temperature_LightIntensity/Inc/LCD.h
+Src/LCD.o: ../Src/LCD.c C:/Shanz/Sensor/TestSensor/Inc/LCD.h
 
-E:/AGILE\ SOFTWARE\ DEVELOPMENT/Sensor/Temperature_LightIntensity/Inc/LCD.h:
+C:/Shanz/Sensor/TestSensor/Inc/LCD.h:

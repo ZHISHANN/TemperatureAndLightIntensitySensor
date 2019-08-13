@@ -64,6 +64,14 @@ void Error_Handler(void);
 #define READ_WRITE_GPIO_Port GPIOA
 #define REG_SEL_Pin GPIO_PIN_3
 #define REG_SEL_GPIO_Port GPIOA
+#define LCD_D0_Pin GPIO_PIN_0
+#define LCD_D0_GPIO_Port GPIOB
+#define LCD_D1_Pin GPIO_PIN_1
+#define LCD_D1_GPIO_Port GPIOB
+#define LCD_D2_Pin GPIO_PIN_2
+#define LCD_D2_GPIO_Port GPIOB
+#define LCD_D3_Pin GPIO_PIN_3
+#define LCD_D3_GPIO_Port GPIOB
 #define LCD_D4_Pin GPIO_PIN_4
 #define LCD_D4_GPIO_Port GPIOB
 #define LCD_D5_Pin GPIO_PIN_5

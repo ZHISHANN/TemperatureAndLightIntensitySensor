@@ -48,10 +48,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-ADC_HandleTypeDef hadc2;
 
 /* USER CODE BEGIN PV */
-/* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
 
@@ -59,42 +57,31 @@ ADC_HandleTypeDef hadc2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_ADC2_Init(void);
 /* USER CODE BEGIN PFP */
-/* Private function prototypes -----------------------------------------------*/
-void convertDec(float C);
-//uint8_t getTemperature();
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 void DelayUs(volatile uint32_t us)
 {
-	if(us != 0)
+	while(us != 0)
 		us--;
 }
 
 void lcdWriteNibble(uint8_t data)
 {
 	// write mode = 0
-	GPIOA->BRR |= READ_WRITE_Pin;
+	//GPIOA->BRR |= READ_WRITE_Pin;
+	GPIOA->BSRR = (1 << 18) | (1 << 1);
 
-	GPIOA->BSRR |= ENABLE_PIN_Pin;
-	HAL_Delay(1);
+	//GPIOA->BSRR |= ENABLE_PIN_Pin;
+	DelayUs(7200);			// 100us
 
 	GPIOB->BRR = LCD_D7_Pin | LCD_D6_Pin | LCD_D5_Pin | LCD_D4_Pin;
-	if (data & 0x08)
-		GPIOB->BSRR |= LCD_D7_Pin;
-	if (data & 0x04)
-		GPIOB->BSRR |= LCD_D6_Pin;
-	if (data & 0x02)
-		GPIOB->BSRR |= LCD_D5_Pin;
-	if (data & 0x01)
-		GPIOB->BSRR |= LCD_D4_Pin;
+	GPIOB->BSRR = (((~data) & 0x0f) << 20) | (data << 4);
 
-	HAL_Delay(1);
+	DelayUs(7200);
 	GPIOA->BRR |= ENABLE_PIN_Pin;
 
 }
@@ -105,90 +92,85 @@ void lcdWrite4BitData(uint8_t data)
 	lcdWriteNibble(data);
 }
 
+void lcdWrite8BitData(uint8_t data)
+{
+	GPIOA->BSRR = (1 << 18) | (1 << 1);
+	DelayUs(7200);		// 100us
+
+	GPIOB->BRR = LCD_D7_Pin | LCD_D6_Pin | LCD_D5_Pin | LCD_D4_Pin | LCD_D3_Pin | LCD_D2_Pin | LCD_D1_Pin | LCD_D0_Pin;
+	GPIOB->BSRR = ((~data) << 16) | data;
+
+	DelayUs(7200);
+	GPIOA->BRR |= ENABLE_PIN_Pin;
+}
+
 void lcdWriteMsg(uint8_t msg)
 {
 	GPIOA->BSRR |= REG_SEL_Pin;
-	lcdWrite4BitData(msg);
+	lcdWrite8BitData(msg);
+	//lcdWrite4BitData(msg);
 }
 
 // send command to LCD
 void lcdWriteCmd(uint8_t msg)
 {
 	GPIOA->BRR |= REG_SEL_Pin;
-	lcdWrite4BitData(msg);
+	lcdWrite8BitData(msg);
+	//lcdWrite4BitData(msg);
 }
 
-void conver2Hex(int C)
+float measureLightIntensity(float Voltage, float stepDownVolatge)
 {
-	int hundreds, tens, ones;
+	HAL_ADC_Start(&hadc1);
+	uint16_t ADC_Light = HAL_ADC_GetValue(&hadc1);
+	float intensity, voltage, actual_volatge;
+	float IRRADIANCE_CONST = 0.19;
 
-	ones = C%10;
-	C = C/10;
-	tens = C%10;
-	hundreds = C/10;
-	//Now convert this into ASCII by ORing it with 0x30
-	if(hundreds != 0)
-	{
-		hundreds = hundreds | 0x30;
-		lcdWriteMsg(hundreds);
-	}
+	ADC_Light = HAL_ADC_GetValue(&hadc1);
+ 	voltage = ((float )ADC_Light / 4096) * stepDownVolatge;
+ 	actual_volatge = (float)voltage * (Voltage/stepDownVolatge);
+ 	intensity = (float)actual_volatge * IRRADIANCE_CONST;
 
-	tens = tens | 0x30;
-	lcdWriteMsg(tens);
-	ones = ones | 0x30;
-	lcdWriteMsg(ones);
+ 	return intensity;
 }
 
-void convertDec(float C)
+float measureTemperature(float Beta)
 {
-	int hundreds, tens, ones;
-	int num = (int)C;
-	float dec = (float)C - num;
+	HAL_ADC_Start(&hadc1);
+	uint16_t ADC_Value;
+	const float adcMax = 4095.00;
+	const float invBeta = 1.00 / Beta;
+	const float invT0 = 1.00 / 298.15;
+	volatile float T, C;
 
-	if(num != 0)
-	{
-		ones = (int)num%10;
-		num = (int)num/10;
-		tens = (int)num%10;
-		hundreds = (int)num/10;
+	lcdSetCustomLoc(0,LINE_1_ADDR,1);
+	ADC_Value = HAL_ADC_GetValue(&hadc1);
+	T = 1.00 / (invT0 + invBeta*(log((adcMax / ADC_Value) - 1.00)));
+	C = T - 273.15;
 
-		if(hundreds != 0)
-		{
-			hundreds = hundreds | 0x30;
-			lcdWriteMsg(hundreds);
-			tens = tens | 0x30;
-			lcdWriteMsg(tens);
-		}
+	return C;
+}
 
-		if(tens != 0)
-		{
-			tens = tens | 0x30;
-			lcdWriteMsg(tens);
-		}
+void lcdPrintTemp()
+{
+	float C = measureTemperature(3721.8);
 
-		ones = ones | 0x30;
-		lcdWriteMsg(ones);
-		lcdDisplayString(".");
-	}
-	else
-		lcdDisplayString("0.");
+	printf(" ");
+	printf("%.2f", C);
+	lcdSetCustomLoc(7,LINE_1_ADDR,0);
+	printf("C");
+}
 
-	dec *= 100;
-	ones = (int)dec%10;
-	dec = (int)dec/10;
-	tens = (int)dec%10;
-	hundreds = (int)dec/10;
+void lcdPrintIntensity()
+{
+	float intensity = measureLightIntensity(20, 3.214);
 
-	if(hundreds != 0)
-	{
-		hundreds = hundreds | 0x30;
-		lcdWriteMsg(hundreds);
-	}
-
-	tens = tens | 0x30;
-	lcdWriteMsg(tens);
-	ones = ones | 0x30;
-	lcdWriteMsg(ones);
+	lcdGotoNextLine();
+ 	lcdSetCustomLoc(0,LINE_2_ADDR,3);
+ 	printf(" ");
+ 	printf("%.2f", intensity);
+ 	printf("W/m");
+ 	lcdSetCustomLoc(9,LINE_2_ADDR,2);
 }
 
 /* USER CODE END 0 */
@@ -223,23 +205,11 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
+  initialise_monitor_handles();
 
   HAL_ADC_Start(&hadc1);
-  uint16_t ADC_Value = HAL_ADC_GetValue(&hadc1);
-  const float adcMax = 4095.00;
-  const float invBeta = 1.00 / 3721.8;
-  const float invT0 = 1.00 / 298.15;
-  volatile float T, C;
-
-  HAL_ADC_Start(&hadc2);
-  uint16_t ADC_Light = HAL_ADC_GetValue(&hadc2);
-  float intensity;
-  float voltage, actual_volatge;
-
-  //calculate volatge from adc value
-  //voltage = (ADC_Value / 4096) * 3.3;
+  //HAL_ADC_Start(&hadc2);
 
   lcdInit();
 
@@ -255,48 +225,21 @@ int main(void)
   uint8_t char4[] = {0x04, 0x15, 0x0E, 0x1B, 0x0E, 0x15, 0x04, 0x0};
   lcdCreateCustom(3,char4);
 
-  uint8_t temp;
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //lcdWriteMsg(0x80);
-	  //lcdReadNibble(DATA_REG);
-	  lcdSetCustomLoc(0,LINE_1_ADDR,1);
-	  //lcdDisplayString("Temperature:");
-	  //displayNextLine();
-	  ADC_Value = HAL_ADC_GetValue(&hadc1);
-	  T = 1.00 / (invT0 + invBeta*(log((adcMax / ADC_Value) - 1.00)));
-	  C = T - 273.15;
-	  lcdDisplayString(" ");
-	  conver2Hex(C);
-	  lcdSetCustomLoc(4,LINE_1_ADDR,0);
-	  lcdDisplayString("C");
-	  displayNextLine();
-	  //lcdDisplayString("Intensity: ");
-	  ADC_Light = HAL_ADC_GetValue(&hadc2);
-	  voltage = ((float )ADC_Light / 4096) * 3.041;
-	  actual_volatge = (float)voltage * (20/3.041);
-	  intensity = (float)actual_volatge * 0.19;
-	  lcdSetCustomLoc(0,LINE_2_ADDR,3);
-	  lcdDisplayString(" ");
-	  convertDec(intensity);
-	  lcdDisplayString("W/m");
-	  lcdSetCustomLoc(9,LINE_2_ADDR,2);
-	  /*HAL_Delay(500);
-	  lcdClrScr();
-	  HAL_Delay(500);*/
-	  //lcdWriteMsg(0x41);
-	  HAL_Delay(1000);
-	  lcdReturnHome();
-
+	 measureTemperature(3721.8);
+	 lcdPrintTemp();
+	 measureLightIntensity(20, 3.214);
+	 lcdPrintIntensity();
+	 HAL_Delay(1000);
+	 lcdReturnToHome();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
   }
   /* USER CODE END 3 */
 }
@@ -391,51 +334,6 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief ADC2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_ADC2_Init(void)
-{
-
-  /* USER CODE BEGIN ADC2_Init 0 */
-
-  /* USER CODE END ADC2_Init 0 */
-
-  ADC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN ADC2_Init 1 */
-
-  /* USER CODE END ADC2_Init 1 */
-  /** Common config 
-  */
-  hadc2.Instance = ADC2;
-  hadc2.Init.ScanConvMode = ADC_SCAN_ENABLE;
-  hadc2.Init.ContinuousConvMode = ENABLE;
-  hadc2.Init.DiscontinuousConvMode = DISABLE;
-  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc2.Init.NbrOfConversion = 1;
-  if (HAL_ADC_Init(&hadc2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Configure Regular Channel 
-  */
-  sConfig.Channel = ADC_CHANNEL_8;
-  sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
-  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN ADC2_Init 2 */
-
-  /* USER CODE END ADC2_Init 2 */
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -453,7 +351,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, ENABLE_PIN_Pin|READ_WRITE_Pin|REG_SEL_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin|LCD_D7_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LCD_D0_Pin|LCD_D1_Pin|LCD_D2_Pin|LCD_D3_Pin 
+                          |LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin|LCD_D7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : ENABLE_PIN_Pin READ_WRITE_Pin REG_SEL_Pin */
   GPIO_InitStruct.Pin = ENABLE_PIN_Pin|READ_WRITE_Pin|REG_SEL_Pin;
@@ -462,18 +361,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA7 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  /*Configure GPIO pins : PA6 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|GPIO_PIN_7;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PB0 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : LCD_D4_Pin LCD_D5_Pin LCD_D6_Pin LCD_D7_Pin */
-  GPIO_InitStruct.Pin = LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin|LCD_D7_Pin;
+  /*Configure GPIO pins : LCD_D0_Pin LCD_D1_Pin LCD_D2_Pin LCD_D3_Pin 
+                           LCD_D4_Pin LCD_D5_Pin LCD_D6_Pin LCD_D7_Pin */
+  GPIO_InitStruct.Pin = LCD_D0_Pin|LCD_D1_Pin|LCD_D2_Pin|LCD_D3_Pin 
+                          |LCD_D4_Pin|LCD_D5_Pin|LCD_D6_Pin|LCD_D7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -482,6 +378,11 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+int __io_putchar(int ch)
+{
+	lcdWriteMsg(ch);
+	return ch;
+}
 
 /* USER CODE END 4 */
 
@@ -493,9 +394,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  while(1)
-  {
-  }
+
   /* USER CODE END Error_Handler_Debug */
 }
 

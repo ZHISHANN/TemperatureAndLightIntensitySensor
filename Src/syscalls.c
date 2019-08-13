@@ -69,6 +69,9 @@ char **environ = __env;
 /* Functions */
 void initialise_monitor_handles()
 {
+	setvbuf(stdin, NULL, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
 }
 
 int _getpid(void)
@@ -88,6 +91,7 @@ void _exit (int status)
 	while (1) {}		/* Make sure we hang here */
 }
 
+__attribute__((weak))
 __attribute__((weak)) int _read(int file, char *ptr, int len)
 {
 	int DataIdx;
@@ -100,7 +104,7 @@ __attribute__((weak)) int _read(int file, char *ptr, int len)
 return len;
 }
 
-__attribute__((weak)) int _write(int file, char *ptr, int len)
+int _write(int file, char *ptr, int len)
 {
 	int DataIdx;
 

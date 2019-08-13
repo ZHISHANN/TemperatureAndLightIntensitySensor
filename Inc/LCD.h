@@ -37,21 +37,14 @@
 
 #define MODE_4BIT_1_LINE		0x20
 #define MODE_4BIT_2_LINE		0x28
-#define LINE_1					0x00
-#define LINE_2					0x40
+#define MODE_8BIT_1_LINE		0x30
+#define MODE_8BIT_2_LINE		0x38
+
+#define MODE_4BIT_1_LINE_510	0x24
+#define MODE_4BIT_2_LINE_510	0x2C
+#define MODE_8BIT_1_LINE_510	0x34
 
 #define ENTRY_MODE				0x06
-
-#define hex0					0x30
-#define hex1					0x31
-#define hex2					0x32
-#define hex3					0x33
-#define hex4					0x34
-#define hex5					0x35
-#define hex6					0x36
-#define hex7					0x37
-#define hex8					0x38
-#define hex9					0x39
 
 // send command or data
 typedef enum{
@@ -62,21 +55,24 @@ typedef enum{
 void lcdWriteNibble(uint8_t data);
 uint8_t lcdReadNibble();
 void lcdWrite4BitData(uint8_t data);
-void toggle();
 void lcdWriteCmd(uint8_t msg);
 void lcdWriteMsg(uint8_t msg);
 void lcdClrScr();
 void DelayUs(volatile uint32_t us);
-uint8_t waitBusy();
-void lcdReturnHome();
+void lcdReturnToHome();
 void lcdDisplayString(char *msg);
-void lcdFuncSet();
+void lcdFuncSet(uint8_t mode);
 void lcdEntryMode();
-void lcdDisplay(uint8_t displayStatus);
-void displayNextLine();
-void lcdSetLocation(uint8_t location, uint8_t line);
-void lcdSetCustomLoc(uint8_t position, uint8_t line, uint8_t data);
+void lcdDisplayStatus(uint8_t displayStatus);
+void lcdGotoNextLine();
+void lcdSetLocation(uint8_t column, uint8_t line);
+void lcdSetCustomLoc(uint8_t column, uint8_t line, uint8_t data);
 void lcdCreateCustom(uint8_t data, uint8_t* data_bytes);
 void lcdInit();
+float measureLightIntensity(float Voltage, float stepDownVolatge);
+float measureTemperature(float Beta);
+void lcdPrintTemp();
+void lcdPrintIntensity();
+void lcdWrite8BitData(uint8_t data);
 
 #endif /* LCD_H_ */

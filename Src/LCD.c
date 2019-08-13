@@ -19,15 +19,14 @@ void lcdClrScr()
 	lcdWriteCmd(CLR_DIS_SCR);
 }
 
-void lcdReturnHome()
+void lcdReturnToHome()
 {
 	lcdWriteCmd(RETURN_HOME);
 }
 
-void lcdFuncSet()
+void lcdFuncSet(uint8_t mode)
 {
-	// 4 bit, 2 line, 5x7 dots
-	lcdWriteCmd(MODE_4BIT_2_LINE);
+	lcdWriteCmd(mode);
 }
 
 void lcdEntryMode()
@@ -35,37 +34,36 @@ void lcdEntryMode()
 	lcdWriteCmd(ENTRY_MODE);
 }
 
-void lcdDisplay(uint8_t displayStatus)
+void lcdDisplayStatus(uint8_t displayStatus)
 {
 	// display on, cursor off
 	lcdWriteCmd(displayStatus);
 }
 
-void displayNextLine()
+void lcdGotoNextLine()
 {
-	lcdWriteCmd(DDRAM_ADDR | LINE_2);
+	lcdWriteCmd(DDRAM_ADDR | LINE_2_ADDR);
 }
 
-void lcdSetLocation(uint8_t location, uint8_t line)
+void lcdSetLocation(uint8_t column, uint8_t line)
 {
 	if(line == LINE_1_ADDR)
-		lcdWriteCmd(DDRAM_ADDR | (LINE_1_ADDR + location));
+		lcdWriteCmd(DDRAM_ADDR | (LINE_1_ADDR + column));
 	else
-		lcdWriteCmd(DDRAM_ADDR | (LINE_2_ADDR + location));
+		lcdWriteCmd(DDRAM_ADDR | (LINE_2_ADDR + column));
 }
 
 void lcdInit()
 {
-	lcdFuncSet();
-	//lcdClrScr();
-	lcdDisplay(DIS_ON_CUR_OFF);
-	lcdEntryMode();
 	lcdClrScr();
+	lcdFuncSet(MODE_8BIT_2_LINE);
+	lcdDisplayStatus(DIS_ON_CUR_OFF);
+	lcdEntryMode();
 }
 
-void lcdSetCustomLoc(uint8_t position, uint8_t line, uint8_t data)
+void lcdSetCustomLoc(uint8_t column, uint8_t line, uint8_t data)
 {
-	lcdSetLocation(position, line);
+	lcdSetLocation(column, line);
 	lcdWriteMsg(data);
 }
 
@@ -73,13 +71,13 @@ void lcdCreateCustom(uint8_t data, uint8_t* data_bytes)
 {
 	int i;
 
-	// only 8 locations 0-7 for custom chars
+	// only 8 locations for custom chars
 	data &= 0x07;
 
 	// Set CGRAM address
 	lcdWriteCmd(CGRAM_ADDR | (data << 3));
 
-	// custom char pattern
+	// char pattern
 	for (i = 0; i < 8; i++)
 	{
 		lcdWriteMsg(data_bytes[i]);
