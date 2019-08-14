@@ -1,3 +1,4 @@
-Src/LCD.o: ../Src/LCD.c C:/Shanz/Sensor/TestSensor/Inc/LCD.h
+Src/LCD.o: ../Src/LCD.c \
+ C:/Students/Shan/TemperatureAndLightIntensitySensor/Inc/LCD.h
 
-C:/Shanz/Sensor/TestSensor/Inc/LCD.h:
+C:/Students/Shan/TemperatureAndLightIntensitySensor/Inc/LCD.h:

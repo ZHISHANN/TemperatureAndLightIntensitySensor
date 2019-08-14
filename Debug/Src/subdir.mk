@@ -5,7 +5,9 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Src/LCD.c \
+../Src/TempSensor.c \
 ../Src/main.c \
+../Src/sensor.c \
 ../Src/stm32f1xx_hal_msp.c \
 ../Src/stm32f1xx_it.c \
 ../Src/syscalls.c \
@@ -13,7 +15,9 @@ C_SRCS += \
 
 OBJS += \
 ./Src/LCD.o \
+./Src/TempSensor.o \
 ./Src/main.o \
+./Src/sensor.o \
 ./Src/stm32f1xx_hal_msp.o \
 ./Src/stm32f1xx_it.o \
 ./Src/syscalls.o \
@@ -21,7 +25,9 @@ OBJS += \
 
 C_DEPS += \
 ./Src/LCD.d \
+./Src/TempSensor.d \
 ./Src/main.d \
+./Src/sensor.d \
 ./Src/stm32f1xx_hal_msp.d \
 ./Src/stm32f1xx_it.d \
 ./Src/syscalls.d \
@@ -33,7 +39,7 @@ Src/%.o: ../Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Shanz/Sensor/TestSensor/Inc" -I"C:/Shanz/Sensor/TestSensor/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Shanz/Sensor/TestSensor/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Shanz/Sensor/TestSensor/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Shanz/Sensor/TestSensor/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Students/Shan/TemperatureAndLightIntensitySensor/Inc" -I"C:/Students/Shan/TemperatureAndLightIntensitySensor/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Students/Shan/TemperatureAndLightIntensitySensor/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Students/Shan/TemperatureAndLightIntensitySensor/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Students/Shan/TemperatureAndLightIntensitySensor/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

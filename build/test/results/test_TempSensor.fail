@@ -1,0 +1,24 @@
+---
+:source:
+  :path: test
+  :file: test_TempSensor.c
+:successes:
+- :test: test_TempSensor_given_write_data_expect_write_data_into_LCD
+  :line: 9
+  :message: ''
+- :test: test_TempSensor_given_read_data_expect_read_data_from_LCD
+  :line: 20
+  :message: ''
+:failures:
+- :test: test_TempSensor_given_8bitData_expect_write_8BitData_to_LCD
+  :line: 29
+  :message: Function write8BitData.  Called less times than expected.
+:ignores: []
+:counts:
+  :total: 3
+  :passed: 2
+  :failed: 1
+  :ignored: 0
+:stdout:
+- 'Temperature : 27.12 C'
+- A

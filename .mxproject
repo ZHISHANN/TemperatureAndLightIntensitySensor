@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Shanz/Sensor/TestSensor/Inc
+HeaderPath=C:/Students/Shan/TemperatureAndLightIntensitySensor/Inc
 HeaderFiles=stm32f1xx_it.h;stm32f1xx_hal_conf.h;main.h;
-SourcePath=C:/Shanz/Sensor/TestSensor/Src
+SourcePath=C:/Students/Shan/TemperatureAndLightIntensitySensor/Src
 SourceFiles=stm32f1xx_it.c;stm32f1xx_hal_msp.c;main.c;
 
 [PreviousLibFiles]
