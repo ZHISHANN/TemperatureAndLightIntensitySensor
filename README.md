@@ -23,3 +23,48 @@ Connection of target(Smart V2 MCU) and program(Blue Pill MCU)
 - PB13 and PA5 of Blue Pill MCU connected to a same resistor of 110Ω before connect PA14 of Smart V2 MCU.
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schematic_temp.png)
+
+Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/shematicLight.png)
+
+Connection of LCD and microcontroller(Smart V2 MCU)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/LCD_Diagram.PNG)
+
+|No. Pin | Function | Name |
+|:----------: |:-----------:|:-----------:|
+| 1 | Ground (0V) | Ground |
+| 2 | Supply voltage; 5V (4.7V – 5.3V) | Vcc |
+| 3 | Contrast adjustment; the best way is to use a variable resistor such as a potentiometer. The output of the potentiometer is connected to this pin. Rotate the potentiometer knob forward and backwards to adjust the LCD contrast. | Vo/VEE |
+| 4 | Selects command register when low, and data register when high | RS (Register Select) |
+| 5 | Low to write to the register; High to read from the register | Read/Write |
+| 6 | Sends data to data pins when a high to low pulse is given; Extra voltage push is required to execute the instruction and EN(enable) signal is used for this purpose. Usually, we make it en=0 and when we want to execute the instruction we make it high en=1 for some milliseconds. After this we again make it ground that is, en=0. | ENABLE |
+| 7 | 8-bit data pins | D0 |
+| 8 | 8-bit data pins | D1 |
+| 9 | 8-bit data pins | D2 |
+| 10 | 8-bit data pins | D3 |
+| 11 | 8-bit data pins | D4 |
+| 12 | 8-bit data pins | D5 |
+| 13 | 8-bit data pins | D6 |
+| 14 | 8-bit data pins | D7 |
+| 15 | Backlight VCC (5V) | LED+ |
+| 16 | Backlight Ground (0V) | LED- |
+
+## Setup in CubeMX
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cubemx_config.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/GPIO%20pin.JPG)
+- configure 2 analog pin(can choose any pin that have ADC configuration)
+- configure 8 output pin for data 
+- configure 3 output pin for register select, read/write and enable
+- configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
+
+## Code
+
+
+## References
+1. http://www.ti.com/lit/ds/symlink/opt101.pdf
+2. https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
+3. https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
+4. https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf/jcr:content/translations/en.CD00171190.pdf
+5. https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
+6. https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
