@@ -49,17 +49,32 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 | 14 | 8-bit data pins | D7 |
 | 15 | Backlight VCC (5V) | LED+ |
 | 16 | Backlight Ground (0V) | LED- |
+- The data pin was connected to the microcontroller
+- Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was choosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
 
 ## Setup in CubeMX
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cubemx_config.JPG)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/GPIO%20pin.JPG)
-- configure 2 analog pin(can choose any pin that have ADC configuration)
-- configure 8 output pin for data 
-- configure 3 output pin for register select, read/write and enable
-- configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
+- Configure 2 analog pin(1 for temperature sensor, 1 for light intensity sensor)(can choose any pin that have ADC configuration)
+- Configure 8 output pin for data 
+- Configure 3 output pin for register select, read/write and enable
+- Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
-## Code
+## Setup in LCD
+- Initalise the LCD before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
+- To display on LCD, can send LCD command to let the LCD know what to do, LCD command can refer to [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
+- For displaying string or number in float, can configure in the eclipse with following step :
 
+--> Project >> Properties >> C/C++ Builder >> Setting >> MCU GCC Linker >> Miscellaneous >> Linker Flags >> add -specs=nosys.specs -specs=nano.specs -u _printf_float
+
+--> also can refer to [Link](https://github.com/chaosAD/Semihosting), for guiding to linker to change the linker flags.
+
+- -u _printf_float was used for printing the float number.
+- Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to my code, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
+- Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
+
+## Measure Temperature
+- Get the ADC value using the HAL library
 
 ## References
 1. http://www.ti.com/lit/ds/symlink/opt101.pdf
