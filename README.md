@@ -17,7 +17,9 @@ This project is about displaying the value of sensor in LCD screen.
 |PB12, PB14    | PA13 (SWDIO)|
 |PB13, PA5     | PA14 (SWCLK)|
 
+Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
 - PB0 of Blue Pill MCU should connected to a resistor of 110Ω before connect R of Smart V2 MCU.
 - PB14 of Blue Pill MCU also need to connected to a resistor of 110Ω before connect PA13 of Smart V2 MCU.
 - PB13 and PA5 of Blue Pill MCU connected to a same resistor of 110Ω before connect PA14 of Smart V2 MCU.
 
+Connection of Temperature sensor and microcontroller(Smart V2 MCU)
