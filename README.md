@@ -26,7 +26,7 @@ Connection of Temperature sensor and microcontroller(Smart V2 MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schematic_temp.png)
 
 Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/shematicLight.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/light%20schematic.JPG)
 
 Connection of LCD and microcontroller(Smart V2 MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/LCD_Diagram.PNG)
@@ -75,6 +75,55 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 
 ## Measure Temperature
 - Get the ADC value using the HAL library
+
+Calculate temperature from adc value
+1/T = 1/T0 + 1/B * ln(R/Rntc)
+
+The variable T is the ambient temperature in Kelvin, T0 is the room temperature, in Kelvin (25°C = 298.15K), B is the beta constant, R is the thermistor resistance at the ambient temperature, and Rntc is the thermistor resistance at temperature T0. 
+
+If the ADC reference voltage (Vref) and voltage divider source voltage (Vs) are the same then the following is true: 
+
+adcMax / adcVal = Vref / Vs
+
+R = Rntc * ( ( adcMax / adcVal ) - 1 )
+
+then:
+
+1/T = 1/T0 + 1/B * ln( Rntc * ( ( adcMax / adcVal ) - 1 ) / Rntc )
+
+R0 cancels out, which leaves:
+
+1/T = 1/T0 + 1/B * ln( ( adcMax / adcVal ) – 1 )
+
+where:-
+- adcMax is the adc resolution
+- B is the constant depends of what type of temperature sensor used
+- adcVal is the digital value after conversion from analog value(using HAL to convert)
+
+After calculated the T in Kelvin, temperature in Celcius can be found out by:
+
+C = T - 273.15
+
+## Measure Light Intensity
+- Get the ADC value using the HAL library
+- Photodiode area 5.22mm² 
+- irradiance : 1u/5.22mm² = 0.19W/m² (constant)
+- Because the microcontroller cannot receive more than 3.3V, so the voltage must be step down from any voltage above 3.3V.
+- The volatge can be adjusted by using a potentiometer.
+- The voltage supply to light ntensity sensor can be any volatge between than 36V - 2.5V, bacause the light intensity can work between 2.5V - 36V.
+- To find the intensity, get the actual volatge from the formula given in below and times with the irradiance constant.
+
+voltage = ((float )ADC_Light / 4096) * stepDownVolatge
+
+actual_volatge = (float)voltage * (Voltage/stepDownVolatge)
+
+intensity = (float)actual_volatge * IRRADIANCE_CONST
+
+where:-
+
+- stepDownVoltage is the voltage connected to microncontroller(the analog pin) after step down from a higher voltage
+- Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
+- IRRADIANCE_CONST is 0.19 as calculated as above
 
 ## References
 1. http://www.ti.com/lit/ds/symlink/opt101.pdf
