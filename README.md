@@ -9,6 +9,7 @@ This project is about displaying the value of sensor in LCD screen.
 - 16 x 2 LCD Screen,  [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
 - Light Intensity Sensor (OPT 101), [Link](https://www.aam.com.pk/wp-content/uploads/2018/03/opt101.jpg)
 - Temperature Sensor (NTC), [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
+- Level Shifter, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter.jpg)
 
 ## Connections
 |Blue Pill MCU | Smart V2 MCU|
@@ -61,6 +62,8 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
+- Before connect the LCD to the microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
+- The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher level side of the level shifter connected to the LCD and 5V. Both side also need to be connect to ground.
 - Initalise the LCD before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
 - To display on LCD, can send LCD command to let the LCD know what to do, LCD command can refer to [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
 - For displaying string or number in float, can configure in the eclipse with following step :
@@ -104,6 +107,26 @@ After calculated the T in Kelvin, temperature in Celcius can be found out by:
 
 C = T - 273.15
 
+In this project, the B constant does not follow the B constant given by the NTC(temperature sensor) follow by the manual, [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf) which is 3950.
+The B constant value was taken experimentally.
+
+In the experiment, all the resistance was recorded according with the temperature from 30°C to 110°C.
+The experiment was carried out by using a temperature oven to record the temperature and resistance.
+After all the resistance was recorded, take the lowest and highest temperature and their resistance respectively. By using the formula below calculate a new B constant:-
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/image.png)
+
+A graph was plot to compare the resistance before and after getting the new B constant,
+Below show the graph of resistance that get from the experiment and the resistance from the theory(which is using the 3950 as b constant). The resistance that get from the experiment was quiet not accurate.
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/prac%20Theory%20graph.PNG)
+
+After calculate a new B constant, the resistance become more accurate. The resistance can be calculate with the new B constant and the formula shown as below:
+
+B = ln(R/Rntc)/(1/T - 1/T0), this formula can be define by using the temperature calulation formula as shown as before.
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cal%20theory%20graph.PNG)
+
 ## Measure Light Intensity
 - Get the ADC value using the HAL library
 - Photodiode area 5.22mm² 
@@ -124,6 +147,11 @@ where:-
 - stepDownVoltage is the voltage connected to microncontroller(the analog pin) after step down from a higher voltage
 - Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
 - IRRADIANCE_CONST is 0.19 as calculated as above
+
+## Result
+From the code, this is the result will show.
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/result.PNG)
 
 ## References
 1. http://www.ti.com/lit/ds/symlink/opt101.pdf
