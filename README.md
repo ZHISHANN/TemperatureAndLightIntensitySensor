@@ -1,27 +1,24 @@
 # Temperature and Light Intensity Sensor
 
 ## Description
-This project is about displaying the value of sensor in LCD screen. 
+This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen.     
 
 ## Tools
-- STM32F103 Blue Pill Microcontroller, [Link](https://jeelabs.org/img/2016/DSC_5474.jpg)
-- STM32F103 Smart V2 Microcontroller, [Link](https://stm32-base.org/assets/img/boards/STM32F103C8T6_STM32_Smart_V2.0-1.jpg)
-- 16 x 2 LCD Screen,  [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
-- Light Intensity Sensor (OPT 101), [Link](https://www.aam.com.pk/wp-content/uploads/2018/03/opt101.jpg)
-- Temperature Sensor (NTC), [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
-- Level Shifter, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter.jpg)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/tool.png)
+- STM32F103 Blue Pill Microcontroller, this microcontroller was used as ST link programmer to program the target microcontroller. [Link](https://jeelabs.org/img/2016/DSC_5474.jpg)
+- STM32F103 Smart V2 Microcontroller, this microcontroller was used as target that connect every connection with the sensor and LCD. [Link](https://stm32-base.org/assets/img/boards/STM32F103C8T6_STM32_Smart_V2.0-1.jpg)
+- 16 x 2 LCD Screen, used to display value of sensor or anything that can display on LCD screen. [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
+- Light Intensity Sensor (OPT 101), this sensor was used to read the light intensity value. [Link](https://www.aam.com.pk/wp-content/uploads/2018/03/opt101.jpg)
+- Temperature Sensor (NTC), this sensor was used to read the temperature value. [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
+- Level Shifter, this level shifter was used to shift the voltage level betwee the microcontroller and the LCD screen. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter.jpg)
+
+**Software used :**
+- STM32 CubeMX
+- STM32 System Workbench
 
 ## Connections
-|Blue Pill MCU | Smart V2 MCU|
-| :----------: |:-----------:|
-|PB0           | R (NRST)    |
-|PB12, PB14    | PA13 (SWDIO)|
-|PB13, PA5     | PA14 (SWCLK)|
-
 Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
-- PB0 of Blue Pill MCU should connected to a resistor of 110Ω before connect R of Smart V2 MCU.
-- PB14 of Blue Pill MCU also need to connected to a resistor of 110Ω before connect PA13 of Smart V2 MCU.
-- PB13 and PA5 of Blue Pill MCU connected to a same resistor of 110Ω before connect PA14 of Smart V2 MCU.
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schem.JPG)
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schematic_temp.png)
@@ -36,10 +33,10 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 |:----------: |:-----------:|:-----------:|
 | 1 | Ground (0V) | Ground |
 | 2 | Supply voltage; 5V (4.7V – 5.3V) | Vcc |
-| 3 | Contrast adjustment; the best way is to use a variable resistor such as a potentiometer. The output of the potentiometer is connected to this pin. Rotate the potentiometer knob forward and backwards to adjust the LCD contrast. | Vo/VEE |
+| 3 | Contrast adjustment | Vo/VEE |
 | 4 | Selects command register when low, and data register when high | RS (Register Select) |
 | 5 | Low to write to the register; High to read from the register | Read/Write |
-| 6 | Sends data to data pins when a high to low pulse is given; Extra voltage push is required to execute the instruction and EN(enable) signal is used for this purpose. Usually, we make it en=0 and when we want to execute the instruction we make it high en=1 for some milliseconds. After this we again make it ground that is, en=0. | ENABLE |
+| 6 | Sends data to data pins when a high to low pulse is given | ENABLE |
 | 7 | 8-bit data pins | D0 |
 | 8 | 8-bit data pins | D1 |
 | 9 | 8-bit data pins | D2 |
@@ -50,15 +47,16 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 | 14 | 8-bit data pins | D7 |
 | 15 | Backlight VCC (5V) | LED+ |
 | 16 | Backlight Ground (0V) | LED- |
-- The data pin was connected to the microcontroller
+- The data pin was connected to the microcontroller to send data from microcontroller to LCD. 
 - Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was choosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
+- In pin 3, to adjust the contrast of LCD, a potentiameter was used. The output of the poteantiameter was connected t this pin. To make the LCD display more clear, can tune the potentiameter to more negative side(Ground).
 
 ## Setup in CubeMX
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cubemx_config.JPG)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/GPIO%20pin.JPG)
 - Configure 2 analog pin(1 for temperature sensor, 1 for light intensity sensor)(can choose any pin that have ADC configuration)
-- Configure 8 output pin for data 
-- Configure 3 output pin for register select, read/write and enable
+- Configure 8 output pin for data, this is to output the data from microcontroller to LCD. 
+- Configure 3 output pin for register select, read/write and enable. 
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
@@ -156,7 +154,6 @@ From the code, this is the result will show.
 ## References
 1. http://www.ti.com/lit/ds/symlink/opt101.pdf
 2. https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
-3. https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
-4. https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf/jcr:content/translations/en.CD00171190.pdf
-5. https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
-6. https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
+3. https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf/jcr:content/translations/en.CD00171190.pdf
+4. https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
+5. https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
