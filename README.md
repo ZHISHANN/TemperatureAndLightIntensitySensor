@@ -54,24 +54,24 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 ## Setup in CubeMX
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cubemx_config.JPG)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/GPIO%20pin.JPG)
-- Configure 2 analog pin(1 for temperature sensor, 1 for light intensity sensor)(can choose any pin that have ADC configuration)
-- Configure 8 output pin for data, this is to output the data from microcontroller to LCD. 
-- Configure 3 output pin for register select, read/write and enable. 
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/analog%20pin.png)
+- To configure an Analog pin, can choose any pin that have ADC configuration that in the microcontroller, 2 analog pin was configured in this project (1 for temperature sensor, 1 for light intensity sensor).
+- Configure 8 output pin for data, this is to output the data from microcontroller to LCD. The output pin can choose any pin that in the microcontroller. (pin that are in same GPIO type are suggested to choose --> this is because during the the configuration of setting the output of the pin is more easier).  e.g. if GPIOA was used, then all pin also use the same GPIO type which is GPIOA.
+- Configure 3 output pin for register select, read/write and enable, this three pin was use by the LCD. 
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
-- Before connect the LCD to the microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter%20connection.png)
+- Before connect all the pin to LCD from microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
 - The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher level side of the level shifter connected to the LCD and 5V. Both side also need to be connect to ground.
-- Initalise the LCD before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
+- After finish construct all the pin, LCD needed to initalise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
 - To display on LCD, can send LCD command to let the LCD know what to do, LCD command can refer to [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
 - For displaying string or number in float, can configure in the eclipse with following step :
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/linker%20guide.png)
+--> Project >> Properties >> C/C++ Builder >> Setting >> MCU GCC Linker >> Miscellaneous >> Linker Flags >> add **-specs=nosys.specs -specs=nano.specs -u _printf_float**
 
---> Project >> Properties >> C/C++ Builder >> Setting >> MCU GCC Linker >> Miscellaneous >> Linker Flags >> add -specs=nosys.specs -specs=nano.specs -u _printf_float
-
---> also can refer to [Link](https://github.com/chaosAD/Semihosting), for guiding to linker to change the linker flags.
-
-- -u _printf_float was used for printing the float number.
-- Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to my code, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
+- **-u _printf_float** was used for printing the float number.
+- Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
 
 ## Measure Temperature
@@ -152,8 +152,9 @@ From the code, this is the result will show.
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/result.PNG)
 
 ## References
-1. http://www.ti.com/lit/ds/symlink/opt101.pdf
-2. https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
-3. https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf/jcr:content/translations/en.CD00171190.pdf
-4. https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
-5. https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
+1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, [Link],(http://www.ti.com/lit/ds/symlink/opt101.pdf)
+2. HD44780U (LCD-II) manual, [Link],(https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
+3. RM0008 Reference manual, [Link],
+(https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
+4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
+5. How 16×2 LCDs work, [Link],(https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
