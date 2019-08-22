@@ -67,11 +67,11 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - After finish construct all the pin, LCD needed to initalise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
 - To display on LCD, can send LCD command to let the LCD know what to do, LCD command can refer to [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
 - For displaying string or number in float, can configure in the eclipse with following step :
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/linker%20guide.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linker%20guide.png)
 --> Project >> Properties >> C/C++ Builder >> Setting >> MCU GCC Linker >> Miscellaneous >> Linker Flags >> add **-specs=nosys.specs -specs=nano.specs -u _printf_float**
 
 - **-u _printf_float** was used for printing the float number.
-- Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
+- Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
 
 ## Measure Temperature
@@ -105,14 +105,14 @@ After calculated the T in Kelvin, temperature in Celcius can be found out by:
 
 C = T - 273.15
 
-In this project, the B constant does not follow the B constant given by the NTC(temperature sensor) follow by the manual, [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf) which is 3950.
+In this project, the B constant does not follow the B constant given by the NTC(temperature sensor) follow by the manual [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf) which is 3950.
 The B constant value was taken experimentally.
 
 In the experiment, all the resistance was recorded according with the temperature from 30°C to 110°C.
 The experiment was carried out by using a temperature oven to record the temperature and resistance.
 After all the resistance was recorded, take the lowest and highest temperature and their resistance respectively. By using the formula below calculate a new B constant:-
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/image.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/image.png)
 
 A graph was plot to compare the resistance before and after getting the new B constant,
 Below show the graph of resistance that get from the experiment and the resistance from the theory(which is using the 3950 as b constant). The resistance that get from the experiment was quiet not accurate.
@@ -152,8 +152,8 @@ From the code, this is the result will show.
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG)
 
 ## References
-1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, http://www.ti.com/lit/ds/symlink/opt101.pdf
-2. HD44780U (LCD-II) manual, https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
-3. RM0008 Reference manual, https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf
-4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
-5. How 16×2 LCDs work, https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
+1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual [Link](http://www.ti.com/lit/ds/symlink/opt101.pdf)
+2. HD44780U (LCD-II) manual [Link](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
+3. RM0008 Reference manual [Link](https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
+4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual [Link](https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
+5. How 16×2 LCDs work [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
