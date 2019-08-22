@@ -105,9 +105,9 @@ After calculated the T in Kelvin, temperature in Celcius can be found out by:
 
 C = T - 273.15
 
-In this project, the B constant does not follow the B constant given by the NTC(temperature sensor) follow by the manual [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf) which is 3950.
-The B constant value was taken experimentally.
+In this project, the B constant does not follow the B constant given by the NTC(temperature sensor) follow by the manual which is 3950. [Link](https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf) 
 
+The B constant value was taken experimentally.
 In the experiment, all the resistance was recorded according with the temperature from 30°C to 110°C.
 The experiment was carried out by using a temperature oven to record the temperature and resistance.
 After all the resistance was recorded, take the lowest and highest temperature and their resistance respectively. By using the formula below calculate a new B constant:-
