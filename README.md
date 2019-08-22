@@ -4,13 +4,13 @@
 This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen.     
 
 ## Tools
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/tool.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png)
 - STM32F103 Blue Pill Microcontroller, this microcontroller was used as ST link programmer to program the target microcontroller. [Link](https://jeelabs.org/img/2016/DSC_5474.jpg)
 - STM32F103 Smart V2 Microcontroller, this microcontroller was used as target that connect every connection with the sensor and LCD. [Link](https://stm32-base.org/assets/img/boards/STM32F103C8T6_STM32_Smart_V2.0-1.jpg)
 - 16 x 2 LCD Screen, used to display value of sensor or anything that can display on LCD screen. [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
 - Light Intensity Sensor (OPT 101), this sensor was used to read the light intensity value. [Link](https://www.aam.com.pk/wp-content/uploads/2018/03/opt101.jpg)
 - Temperature Sensor (NTC), this sensor was used to read the temperature value. [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
-- Level Shifter, this level shifter was used to shift the voltage level betwee the microcontroller and the LCD screen. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter.jpg)
+- Level Shifter, this level shifter was used to shift the voltage level betwee the microcontroller and the LCD screen. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter.jpg)
 
 **Software used :**
 - STM32 CubeMX
@@ -18,16 +18,16 @@ This project is about displaying the value of sensor in LCD screen. The value of
 
 ## Connections
 Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schem.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG)
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/schematic_temp.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schematic_temp.png)
 
 Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/light%20schematic.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20schematic.JPG)
 
 Connection of LCD and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/LCD_Diagram.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD_Diagram.PNG)
 
 |No. Pin | Function | Name |
 |:----------: |:-----------:|:-----------:|
@@ -52,16 +52,16 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - In pin 3, to adjust the contrast of LCD, a potentiameter was used. The output of the poteantiameter was connected t this pin. To make the LCD display more clear, can tune the potentiameter to more negative side(Ground).
 
 ## Setup in CubeMX
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cubemx_config.JPG)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/GPIO%20pin.JPG)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/analog%20pin.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cubemx_config.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/GPIO%20pin.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/analog%20pin.png)
 - To configure an Analog pin, can choose any pin that have ADC configuration that in the microcontroller, 2 analog pin was configured in this project (1 for temperature sensor, 1 for light intensity sensor).
 - Configure 8 output pin for data, this is to output the data from microcontroller to LCD. The output pin can choose any pin that in the microcontroller. (pin that are in same GPIO type are suggested to choose --> this is because during the the configuration of setting the output of the pin is more easier).  e.g. if GPIOA was used, then all pin also use the same GPIO type which is GPIOA.
 - Configure 3 output pin for register select, read/write and enable, this three pin was use by the LCD. 
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/level%20shifter%20connection.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png)
 - Before connect all the pin to LCD from microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
 - The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher level side of the level shifter connected to the LCD and 5V. Both side also need to be connect to ground.
 - After finish construct all the pin, LCD needed to initalise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
@@ -117,13 +117,13 @@ After all the resistance was recorded, take the lowest and highest temperature a
 A graph was plot to compare the resistance before and after getting the new B constant,
 Below show the graph of resistance that get from the experiment and the resistance from the theory(which is using the 3950 as b constant). The resistance that get from the experiment was quiet not accurate.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/prac%20Theory%20graph.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/prac%20Theory%20graph.PNG)
 
 After calculate a new B constant, the resistance become more accurate. The resistance can be calculate with the new B constant and the formula shown as below:
 
 B = ln(R/Rntc)/(1/T - 1/T0), this formula can be define by using the temperature calulation formula as shown as before.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/cal%20theory%20graph.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cal%20theory%20graph.PNG)
 
 ## Measure Light Intensity
 - Get the ADC value using the HAL library
@@ -149,12 +149,11 @@ where:-
 ## Result
 From the code, this is the result will show.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/result.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG)
 
 ## References
-1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, [Link],(http://www.ti.com/lit/ds/symlink/opt101.pdf)
-2. HD44780U (LCD-II) manual, [Link],(https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
-3. RM0008 Reference manual, [Link],
-(https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
-4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, [Link],(https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
-5. How 16×2 LCDs work, [Link],(https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
+1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, http://www.ti.com/lit/ds/symlink/opt101.pdf
+2. HD44780U (LCD-II) manual, https://www.sparkfun.com/datasheets/LCD/HD44780.pdf
+3. RM0008 Reference manual, https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf
+4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf
+5. How 16×2 LCDs work, https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram
