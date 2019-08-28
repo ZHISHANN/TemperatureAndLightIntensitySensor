@@ -110,7 +110,7 @@ Below show the graph before and after linearize, and the new B constant was foun
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
-## :high_brightness: Measure Light Intensity 
+## :bulb: Measure Light Intensity 
 - Get the ADC value using the HAL library
 - Photodiode area 5.22mm² 
 - irradiance :
@@ -132,9 +132,9 @@ where:-
 
 ## Custom Symbol
 - The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
-- User can custom any symbol for 5x8 dots or 5x10 dots font size.
+User can custom any symbol for 5x8 dots or 5x10 dots font size.
 - For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
-- For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
+For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
 - To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbol because it only contains 8 locations to save in CGRAM.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
