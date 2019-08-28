@@ -78,7 +78,8 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - Get the ADC value using the HAL library
 
 Calculate temperature from adc value
-1/T = 1/T0 + 1/B * ln(R/Rntc)
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20eq.gif)
 
 The variable T is the ambient temperature in Kelvin, T0 is the room temperature, in Kelvin (25°C = 298.15K), B is the beta constant, R is the thermistor resistance at the ambient temperature, and Rntc is the thermistor resistance at temperature T0. 
 
@@ -101,7 +102,8 @@ The B constant value was taken experimentally.
 In the experiment, all the resistance was recorded according with the temperature from 30°C to 110°C.
 The experiment was carried out by using a temperature oven to record the temperature and resistance.
 The value of Ravr(theory) was taken from the given table with B constant value of 3950. The value of R(prac) was measured practical with 100kohm of resistor.
-The resistance value was transform to linear format before finding a suitable B constant value. To transform from non-linear to linear, the y-axis element was plot as **ln y** which is the resistance value. 
+
+The graph was transform to linear graph before finding a suitable B constant value. To transform from non-linear to linear, the y-axis element was plot as **ln y** which is the resistance value. 
 Below shows the formula how to transform from non-linear graph to linear graph. The linear graph was plot using this formula.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png)
