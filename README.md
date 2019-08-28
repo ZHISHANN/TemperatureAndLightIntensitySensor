@@ -21,10 +21,10 @@ Connection of target(Smart V2 MCU) and program(Blue Pill MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG)
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schematic_temp.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20schem.png)
 
 Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20schematic.JPG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20intensity%20schem.png)
 
 Connection of LCD and microcontroller(Smart V2 MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD_Diagram.PNG)
