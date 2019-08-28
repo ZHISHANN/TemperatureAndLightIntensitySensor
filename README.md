@@ -84,17 +84,7 @@ The variable T is the ambient temperature in Kelvin, T0 is the room temperature,
 
 If the ADC reference voltage (Vref) and voltage divider source voltage (Vs) are the same then the following is true: 
 
-adcMax / adcVal = Vref / Vs
-
-R = Rntc * ( ( adcMax / adcVal ) - 1 )
-
-then:
-
-1/T = 1/T0 + 1/B * ln( Rntc * ( ( adcMax / adcVal ) - 1 ) / Rntc )
-
-R0 cancels out, which leaves:
-
-1/T = 1/T0 + 1/B * ln( ( adcMax / adcVal ) – 1 )
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20formula.png)
 
 where:-
 - adcMax is the adc resolution
@@ -110,20 +100,15 @@ In this project, the B constant does not follow the B constant given by the NTC(
 The B constant value was taken experimentally.
 In the experiment, all the resistance was recorded according with the temperature from 30°C to 110°C.
 The experiment was carried out by using a temperature oven to record the temperature and resistance.
-After all the resistance was recorded, take the lowest and highest temperature and their resistance respectively. By using the formula below calculate a new B constant:-
+The value of Ravr(theory) was taken from the given table with B constant value of 3950. The value of R(prac) was measured practical with 100kohm of resistor.
+The resistance value was transform to linear format before finding a suitable B constant value. To transform from non-linear to linear, the y-axis element was plot as **ln y** which is the resistance value. 
+Below shows the formula how to transform from non-linear graph to linear graph. The linear graph was plot using this formula.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/image.png)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png)
 
-A graph was plot to compare the resistance before and after getting the new B constant,
-Below show the graph of resistance that get from the experiment and the resistance from the theory(which is using the 3950 as b constant). The resistance that get from the experiment was quiet not accurate.
+Below show the graph before and after linearize, and the new B constant was found also which is 3631.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/prac%20Theory%20graph.PNG)
-
-After calculate a new B constant, the resistance become more accurate. The resistance can be calculate with the new B constant and the formula shown as below:
-
-B = ln(R/Rntc)/(1/T - 1/T0), this formula can be define by using the temperature calulation formula as shown as before.
-
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cal%20theory%20graph.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
 ## Measure Light Intensity
 - Get the ADC value using the HAL library
@@ -152,8 +137,9 @@ From the code, this is the result will show.
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG)
 
 ## References
-1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual [Link](http://www.ti.com/lit/ds/symlink/opt101.pdf)
-2. HD44780U (LCD-II) manual [Link](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
-3. RM0008 Reference manual [Link](https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
-4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual [Link](https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
-5. How 16×2 LCDs work [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
+1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, [Link](http://www.ti.com/lit/ds/symlink/opt101.pdf)
+2. HD44780U (LCD-II) manual, [Link](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
+3. RM0008 Reference manual, [Link](https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
+4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, [Link](https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
+5. How 16×2 LCDs work, [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
+6. Linear regression graph, [Link](https://www.ablebits.com/office-addins-blog/2018/08/01/linear-regression-analysis-excel/)
