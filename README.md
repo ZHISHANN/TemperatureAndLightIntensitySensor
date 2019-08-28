@@ -1,9 +1,9 @@
-# Temperature and Light Intensity Sensor
+# :partly_sunny:Temperature and Light Intensity Sensor 
 
-## Description
+## :label: Description
 This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol aslo designed to display on LCD screen.
 
-## Tools
+## :hammer:Tools 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png)
 - STM32F103 Blue Pill Microcontroller, this microcontroller was used as ST link programmer to program the target microcontroller. [Link](https://jeelabs.org/img/2016/DSC_5474.jpg)
 - STM32F103 Smart V2 Microcontroller, this microcontroller was used as target that connect every connection with the sensor and LCD. [Link](https://stm32-base.org/assets/img/boards/STM32F103C8T6_STM32_Smart_V2.0-1.jpg)
@@ -16,7 +16,7 @@ This project is about displaying the value of sensor in LCD screen. The value of
 - STM32 CubeMX
 - STM32 System Workbench
 
-## Connections
+## :paperclips: Connections
 Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG)
 
@@ -74,7 +74,7 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
 
-## Measure Temperature
+## :partly_sunny: Measure Temperature
 - Get the ADC value using the HAL library
 
 Calculate temperature from adc value
@@ -110,7 +110,7 @@ Below show the graph before and after linearize, and the new B constant was foun
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
-## Measure Light Intensity
+## :high_brightness: Measure Light Intensity 
 - Get the ADC value using the HAL library
 - Photodiode area 5.22mm² 
 - irradiance :
@@ -131,19 +131,20 @@ where:-
 - IRRADIANCE_CONST is 0.19 as calculated as above
 
 ## Custom Symbol
-The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
-User can custom any symbol for 5x8 dots or 5x10 dots font size.
-For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
-For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
+- The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
+- User can custom any symbol for 5x8 dots or 5x10 dots font size.
+- For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
+- For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
+- To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbol because it only contains 8 locations to save in CGRAM.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
 
-## Result
+## :bell: Result
 From the code, this is the result will show.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG)
 
-## References
+## :books: References
 1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, [Link](http://www.ti.com/lit/ds/symlink/opt101.pdf)
 2. HD44780U (LCD-II) manual, [Link](https://www.sparkfun.com/datasheets/LCD/HD44780.pdf)
 3. RM0008 Reference manual, [Link](https://www.st.com/content/ccc/resource/technical/document/reference_manual/59/b9/ba/7f/11/af/43/d5/CD00171190.pdf/files/CD00171190.pdf)
