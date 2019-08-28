@@ -106,24 +106,23 @@ Below shows the formula how to transform from non-linear graph to linear graph. 
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png)
 
-Below show the graph before and after linearize, and the new B constant was found also which is 3631.
+Below show the graph before and after linearize, and the new B constant was found also which is 3631. Excel file, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/r%20vs%20t.xlsx)
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
 ## Measure Light Intensity
 - Get the ADC value using the HAL library
 - Photodiode area 5.22mm² 
-- irradiance : 1u/5.22mm² = 0.19W/m² (constant)
+- irradiance :
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/constant%20value.png)
+
 - Because the microcontroller cannot receive more than 3.3V, so the voltage must be step down from any voltage above 3.3V.
 - The volatge can be adjusted by using a potentiometer.
 - The voltage supply to light ntensity sensor can be any volatge between than 36V - 2.5V, bacause the light intensity can work between 2.5V - 36V.
 - To find the intensity, get the actual volatge from the formula given in below and times with the irradiance constant.
 
-voltage = ((float )ADC_Light / 4096) * stepDownVolatge
-
-actual_volatge = (float)voltage * (Voltage/stepDownVolatge)
-
-intensity = (float)actual_volatge * IRRADIANCE_CONST
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20formula.png)
 
 where:-
 
