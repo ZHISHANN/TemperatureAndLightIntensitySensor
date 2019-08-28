@@ -130,12 +130,11 @@ where:-
 - Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
 - IRRADIANCE_CONST is 0.19 as calculated as above
 
-##Custom Symbol
+## Custom Symbol
 The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
 User can custom any symbol for 5x8 dots or 5x10 dots font size.
 For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
 For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
-
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
 
