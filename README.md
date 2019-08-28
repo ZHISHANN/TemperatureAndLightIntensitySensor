@@ -1,7 +1,7 @@
 # Temperature and Light Intensity Sensor
 
 ## Description
-This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen.     
+This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol aslo designed to display on LCD screen.
 
 ## Tools
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png)
@@ -129,6 +129,15 @@ where:-
 - stepDownVoltage is the voltage connected to microncontroller(the analog pin) after step down from a higher voltage
 - Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
 - IRRADIANCE_CONST is 0.19 as calculated as above
+
+##Custom Symbol
+The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
+User can custom any symbol for 5x8 dots or 5x10 dots font size.
+For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
+For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
+
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
 
 ## Result
 From the code, this is the result will show.
