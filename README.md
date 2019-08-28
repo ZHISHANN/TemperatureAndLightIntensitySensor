@@ -27,7 +27,7 @@ Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20intensity%20schem.png)
 
 Connection of LCD and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD_Diagram.PNG)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD.png)
 
 |No. Pin | Function | Name |
 |:----------: |:-----------:|:-----------:|
@@ -47,9 +47,12 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 | 14 | 8-bit data pins | D7 |
 | 15 | Backlight VCC (5V) | LED+ |
 | 16 | Backlight Ground (0V) | LED- |
-- The data pin was connected to the microcontroller to send data from microcontroller to LCD. 
-- Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was choosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
-- In pin 3, to adjust the contrast of LCD, a potentiameter was used. The output of the poteantiameter was connected t this pin. To make the LCD display more clear, can tune the potentiameter to more negative side(Ground).
+
+The data pin was connected to the microcontroller to send data from microcontroller to LCD. 
+
+Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was choosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
+
+In pin 3, to adjust the contrast of LCD, a potentiameter was used. The output of the poteantiameter was connected t this pin. To make the LCD display more clear, can tune the potentiameter to more negative side(Ground).
 
 ## Setup in CubeMX
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cubemx_config.JPG)
@@ -75,7 +78,7 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
 
 ## :partly_sunny: Measure Temperature
-- Get the ADC value using the HAL library
+- Get the ADC value sense from sensor via microcontroller using the HAL library
 
 Calculate temperature from adc value
 
@@ -113,16 +116,18 @@ Below show the graph before and after linearize, and the new B constant was foun
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
 ## :bulb: Measure Light Intensity 
-- Get the ADC value using the HAL library
+- Get the ADC value sense by the sensor via microcontroller using the HAL library
 - Photodiode area 5.22mm² 
 - irradiance :
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/constant%20value.png)
 
-- Because the microcontroller cannot receive more than 3.3V, so the voltage must be step down from any voltage above 3.3V.
-- The volatge can be adjusted by using a potentiometer.
-- The voltage supply to light ntensity sensor can be any volatge between than 36V - 2.5V, bacause the light intensity can work between 2.5V - 36V.
-- To find the intensity, get the actual volatge from the formula given in below and times with the irradiance constant.
+Because the microcontroller cannot receive more than 3.3V, so the voltage must be step down from any voltage above 3.3V.
+
+The volatge can be adjusted by using a potentiometer.
+The voltage supply to light ntensity sensor can be any volatge between than 36V - 2.5V, bacause the light intensity can work between 2.5V - 36V.
+
+To find the intensity, get the actual volatge from the formula given in below and times with the irradiance constant.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20formula.png)
 
@@ -133,11 +138,13 @@ where:-
 - IRRADIANCE_CONST is 0.19 as calculated as above
 
 ## Custom Symbol
-- The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
+The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
 User can custom any symbol for 5x8 dots or 5x10 dots font size.
-- For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
+
+For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
 For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
-- To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbol because it only contains 8 locations to save in CGRAM.
+
+To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbol because it only contains 8 locations to save in CGRAM.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
 
