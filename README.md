@@ -1,7 +1,7 @@
 # :partly_sunny:Temperature and Light Intensity Sensor 
 
 ## :label: Description
-This project is about displaying the value of sensor in LCD screen. The value of sensor was get from the GPIO ADC pin of the microcontroller, through ADC(Analog to Digital) the value from sensor in analog form was change to digital form using the microcontroller. In this project, 2 sensor was used which is temperature sensor and light intensity sensor. The tempearature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol aslo designed to display on LCD screen.
+This project is about displaying the value of sensor in LCD screen. The value of sensor was gotten from the GPIO ADC pin of the microcontroller, through ADC (Analog to Digital) the value from sensor in analogue form was change to digital form using the microcontroller. In this project, 2 sensors were used which is temperature sensor and light intensity sensor. The temperature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol also designed to display on LCD screen.
 
 ## :hammer:Tools 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png)
@@ -10,7 +10,7 @@ This project is about displaying the value of sensor in LCD screen. The value of
 - 16 x 2 LCD Screen, used to display value of sensor or anything that can display on LCD screen. [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
 - Light Intensity Sensor (OPT 101), this sensor was used to read the light intensity value. [Link](https://www.aam.com.pk/wp-content/uploads/2018/03/opt101.jpg)
 - Temperature Sensor (NTC), this sensor was used to read the temperature value. [Link](https://ae01.alicdn.com/kf/HTB13TzPSFXXXXaWXFXXq6xXFXXXq/100K-Ohm-NTC-3950-Thermistors-with-Cable-for-3D-Printer-Reprap-Mend.jpg_640x640.jpg)
-- Level Shifter, this level shifter was used to shift the voltage level betwee the microcontroller and the LCD screen. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter.jpg)
+- Level Shifter, this level shifter was used to shift the voltage level between the microcontroller and the LCD screen. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter.jpg)
 
 **Software used :**
 - STM32 CubeMX
@@ -50,24 +50,24 @@ Connection of LCD and microcontroller(Smart V2 MCU)
 
 The data pin was connected to the microcontroller to send data from microcontroller to LCD. 
 
-Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was choosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
+Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was chosen D0 - D3 was not in used, while in 8-bit mode all the pin D0 - D7 are used.
 
-In pin 3, to adjust the contrast of LCD, a potentiameter was used. The output of the poteantiameter was connected t this pin. To make the LCD display more clear, can tune the potentiameter to more negative side(Ground).
+In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of the potentiometer was connected to this pin. To make the LCD display clearer, can tune the potentiometer to more negative side(Ground).
 
 ## Setup in CubeMX
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cubemx_config.JPG)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/GPIO%20pin.JPG)
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/analog%20pin.png)
-- To configure an Analog pin, can choose any pin that have ADC configuration that in the microcontroller, 2 analog pin was configured in this project (1 for temperature sensor, 1 for light intensity sensor).
-- Configure 8 output pin for data, this is to output the data from microcontroller to LCD. The output pin can choose any pin that in the microcontroller. (pin that are in same GPIO type are suggested to choose --> this is because during the the configuration of setting the output of the pin is more easier).  e.g. if GPIOA was used, then all pin also use the same GPIO type which is GPIOA.
-- Configure 3 output pin for register select, read/write and enable, this three pin was use by the LCD. 
+- To configure an Analog pins, can choose any pin that have ADC configuration that in the microcontroller, 2 analog pin was configured in this project (1 for temperature sensor, 1 for light intensity sensor).
+- Configure 8 output pin for data, this is to output the data from microcontroller to LCD. The output pin can choose any pin that in the microcontroller. (pin that are in same GPIO type are suggested to choose --> this is because during the configuration of setting the output of the pin is easier).  e.g. if GPIOA was used, then all pin also uses the same GPIO type which is GPIOA.
+- Configure 3 output pin for register select, read/write and enable, these three pins were used by the LCD. 
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png)
 - Before connect all the pin to LCD from microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
-- The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher level side of the level shifter connected to the LCD and 5V. Both side also need to be connect to ground.
-- After finish construct all the pin, LCD needed to initalise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
+- The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher-level side of the level shifter connected to the LCD and 5V. Both sides also need to be connected to ground.
+- After finish construct all the pin, LCD needed to initialise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
 - To display on LCD, can send LCD command to let the LCD know what to do, LCD command can refer to [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
 - For displaying string or number in float, can configure in the eclipse with following step :
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linker%20guide.png)
@@ -95,7 +95,7 @@ where:-
 - B is the constant depends of what type of temperature sensor used
 - adcVal is the digital value after conversion from analog value(using HAL to convert)
 
-After calculated the T in Kelvin, temperature in Celcius can be found out by:
+After calculated the T in Kelvin, temperature in Celsius can be found out by:
 
 C = T - 273.15
 
@@ -111,7 +111,7 @@ Below shows the formula how to transform from non-linear graph to linear graph. 
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png)
 
-Below show the graph before and after linearize, and the new B constant was found also which is 3631. Excel file, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/r%20vs%20t.xlsx)
+Below shows the graph before and after linearize, and the new B constant was found also which is 3631. Excel file, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/r%20vs%20t.xlsx)
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
 
@@ -124,10 +124,9 @@ Below show the graph before and after linearize, and the new B constant was foun
 
 Because the microcontroller cannot receive more than 3.3V, so the voltage must be step down from any voltage above 3.3V.
 
-The volatge can be adjusted by using a potentiometer.
-The voltage supply to light ntensity sensor can be any volatge between than 36V - 2.5V, bacause the light intensity can work between 2.5V - 36V.
+The voltage can be adjusted by using a potentiometer. The voltage supply to light intensity sensor can be any voltage between than 36V - 2.5V, because the light intensity can work between 2.5V - 36V.
 
-To find the intensity, get the actual volatge from the formula given in below and times with the irradiance constant.
+To find the intensity, get the actual voltage from the formula given in below and times with the irradiance constant.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20formula.png)
 
@@ -144,7 +143,7 @@ User can custom any symbol for 5x8 dots or 5x10 dots font size.
 For 5x8 dots font size, user can fully use the 2 line in LCD to put the created custom symbol.
 For 5x10 dots font size, user can only use 1 line to display the created custom symbol.
 
-To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbol because it only contains 8 locations to save in CGRAM.
+To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbols because it only contains 8 locations to save in CGRAM.
 
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
 
