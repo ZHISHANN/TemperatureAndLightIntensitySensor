@@ -19,6 +19,7 @@ This project is about displaying the value of sensor in LCD screen. The value of
 
 ## :paperclips: Connections
 Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
+
 <img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG" width="400">
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
@@ -28,6 +29,7 @@ Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
 <img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20intensity%20schem.png" width="400">
 
 Connection of LCD and microcontroller(Smart V2 MCU)
+
 <img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD.png" width="400">
 
 |No. Pin | Function | Name |
@@ -56,16 +58,20 @@ Data can transfer in 4-bit mode or 8-bit mode, if 4-bit mode was chosen D0 - D3 
 In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of the potentiometer was connected to this pin. To make the LCD display clearer, can tune the potentiometer to more negative side(Ground).
 
 ## Setup in CubeMX
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cubemx_config.JPG)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/cubemx_config.JPG" width="450">
+
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/GPIO%20pin.JPG)
+
 ![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/analog%20pin.png)
+
 - To configure an Analog pins, can choose any pin that have ADC configuration that in the microcontroller, 2 analog pin was configured in this project (1 for temperature sensor, 1 for light intensity sensor).
 - Configure 8 output pin for data, this is to output the data from microcontroller to LCD. The output pin can choose any pin that in the microcontroller. (pin that are in same GPIO type are suggested to choose --> this is because during the configuration of setting the output of the pin is easier).  e.g. if GPIOA was used, then all pin also uses the same GPIO type which is GPIOA.
 - Configure 3 output pin for register select, read/write and enable, these three pins were used by the LCD. 
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png" width="400">
+
 - Before connect all the pin to LCD from microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
 - The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher-level side of the level shifter connected to the LCD and 5V. Both sides also need to be connected to ground.
 - After finish construct all the pin, LCD needed to initialise before sending anything to LCD. Refer to --> [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c), function lcdInit().
@@ -77,6 +83,47 @@ In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of
 - **-u _printf_float** was used for printing the float number.
 - Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
+
+## How to use LCD
+First when the LCD was power up and turn on, the pixel on the first row of the LCD screen will light up as shown as below. If you can't see it, adjust the potentiometer until can see the pixel light up. (make sure the LCD was given enough voltage to turn on (2.7V to 5.5V))
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/lcd%20on.png)
+
+To display on the LCD, first need to initialise the LCD by sending command to LCD. To send command to LCD, need to reset pin 4 of LCD to 0 which is the Register Select pin. If the Register Select was set to 0 its mean send command to LCD, while set to 1 mean send message/data to LCD for display.
+
+Step to initialise the LCD:
+1. set the condition -> how many bit to send (8 bit/4 bit?), how many line to display (1 line/2 line ?) 
+   - 8 bit, 1 line : send 0x30
+   - 8-bit, 2 Line : send 0x38
+   - 4-bit, 1 Line : send 0x20
+   - 4-bit, 2 Line : send 0x28
+2. turn on the display : send 0x0C
+3. set the entry mode, tell the LCD ready to display : send 0x06
+4. Clear the LCD screen : send 0x01
+
+Step to send command:
+1. set Register Select pin to 0 (0 -> send command, 1 -> send data)
+2. set R/W pin to 0 (read -> 1, write -> 0)
+3. set the Enable pin to 1
+4. delay
+5. send command 
+6. delay
+7. disable the Enable pin by setting it to 0
+
+Step to send message/data:
+1. set Register Select pin to 1 (0 -> send command, 1 -> send data)
+2. set R/W pin to 0 (read -> 1, write -> 0)
+3. set the Enable pin to 1
+4. delay
+5. send message 
+6. delay
+7. disable the Enable pin by setting it to 0
+
+:warning: If in the begining was choose to send 4 bit data, the data must be __TWICE__, bacause 1 time only can send 4 bit data and the data was 8 bit. If 8 bit mode was chosen, then the data send only __ONCE__. Data must be send after enable signal, after the enable signal must have a delay, because the data need some setup time. 
+
+Below shows the timing diagram of the data:
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png)
 
 ## :thermometer: Measure Temperature
 - Get the ADC value sense from sensor via microcontroller using the HAL library
@@ -136,47 +183,6 @@ where:-
 - stepDownVoltage is the voltage connected to microncontroller(the analog pin) after step down from a higher voltage
 - Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
 - IRRADIANCE_CONST is 0.19 as calculated as above
-
-## Setup in LCD
-First when the LCD was power up and turn on, the pixel on the first row of the LCD screen will light up as shown as below. If you can't see it, adjust the potentiometer until can see the pixel light up. (make sure the LCD was given enough voltage to turn on (2.7V to 5.5V))
-
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/lcd%20on.png)
-
-To display on the LCD, first need to initialise the LCD by sending command to LCD. To send command to LCD, need to reset pin 4 of LCD to 0 which is the Register Select pin. If the Register Select was set to 0 its mean send command to LCD, while set to 1 mean send message/data to LCD for display.
-
-Step to initialise the LCD:
-1. set the condition -> how many bit to send (8 bit/4 bit?), how many line to display (1 line/2 line ?) 
-   - 8 bit, 1 line : send 0x30
-   - 8-bit, 2 Line : send 0x38
-   - 4-bit, 1 Line : send 0x20
-   - 4-bit, 2 Line : send 0x28
-2. turn on the display : send 0x0C
-3. set the entry mode, tell the LCD ready to display : send 0x06
-4. Clear the LCD screen : send 0x01
-
-Step to send command:
-1. set Register Select pin to 0 (0 -> send command, 1 -> send data)
-2. set R/W pin to 0 (read -> 1, write -> 0)
-3. set the Enable pin to 1
-4. delay
-5. send command 
-6. delay
-7. disable the Enable pin by setting it to 0
-
-Step to send message/data:
-1. set Register Select pin to 1 (0 -> send command, 1 -> send data)
-2. set R/W pin to 0 (read -> 1, write -> 0)
-3. set the Enable pin to 1
-4. delay
-5. send message 
-6. delay
-7. disable the Enable pin by setting it to 0
-
-:warning: If in the begining was choose to send 4 bit data, the data must be __TWICE__, bacause 1 time only can send 4 bit data and the data was 8 bit. If 8 bit mode was chosen, then the data send only __ONCE__. Data must be send after enable signal, after the enable signal must have a delay, because the data need some setup time. 
-
-Below shows the timing diagram of the data:
-
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png)
 
 ## Custom Symbol
 The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
