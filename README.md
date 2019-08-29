@@ -136,6 +136,33 @@ where:-
 - Voltage is the volatge connected to the light intensity sensor(2.5V - 36V)
 - IRRADIANCE_CONST is 0.19 as calculated as above
 
+## Setup in LCD
+First when the LCD was power up and turn on, the pixel on the first row of the LCD screen will light up as shown as below. If you can't see it, adjust the potentiometer until can see the pixel light up. (make sure the LCD was given enough voltage to turn on (2.7V to 5.5V))
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/lcd%20on.png)
+
+To display on the LCD, first need to initialise the LCD by sending command to LCD. To send command to LCD, need to reset pin 4 of LCD to 0 which is the Register Select pin. If the Register Select was set to 0 its mean send command to LCD, while set to 1 mean send message/data to LCD for display.
+
+Step to initialise the LCD:
+1. set the condition -> how many bit to send (8 bit/4 bit?), how many line to display (1 line/2 line ?) 
+   - 8 bit, 1 line : send 0x30
+   - 8-bit, 2 Line : send 0x38
+   - 4-bit, 1 Line : send 0x20
+   - 4-bit, 2 Line : send 0x28
+2. turn on the display : send 0x0C
+3. set the entry mode, tell the LCD ready to display : send 0x06
+4. Clear the LCD screen : send 0x01
+
+Step to send command:
+1. set Register Select pin to 0 (0 -> send command, 1 -> send data)
+2. set R/W pin to 0 (read -> 1, write -> 0)
+3. send command 
+
+Step to send message/data:
+1. set Register Select pin to 1 (0 -> send command, 1 -> send data)
+2. set R/W pin to 0 (read -> 1, write -> 0)
+3. send message 
+
 ## Custom Symbol
 The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
 User can custom any symbol for 5x8 dots or 5x10 dots font size.
@@ -159,3 +186,4 @@ From the code, this is the result will show.
 4. Reprap Hotend Thermistor NTC 3950 100K with 1M Cable manual, [Link](https://www.makeralot.com/download/Reprap-Hotend-Thermistor-NTC-3950-100K.pdf)
 5. How 16×2 LCDs work, [Link](https://electronicsforu.com/resources/learn-electronics/16x2-lcd-pinout-diagram)
 6. Linear regression graph, [Link](https://www.ablebits.com/office-addins-blog/2018/08/01/linear-regression-analysis-excel/)
+7. A1.8051 Interfacing:LCD 16x2, [Link](https://exploreembedded.com/wiki/A1.8051_Interfacing:LCD_16x2)
