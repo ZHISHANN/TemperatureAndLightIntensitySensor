@@ -4,7 +4,8 @@
 This project is about displaying the value of sensor in LCD screen. The value of sensor was gotten from the GPIO ADC pin of the microcontroller, through ADC (Analog to Digital) the value from sensor in analogue form was change to digital form using the microcontroller. In this project, 2 sensors were used which is temperature sensor and light intensity sensor. The temperature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol also designed to display on LCD screen.
 
 ## :hammer:Tools 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/tool.png" width="600">
+
 - STM32F103 Blue Pill Microcontroller, this microcontroller was used as ST link programmer to program the target microcontroller. [Link](https://jeelabs.org/img/2016/DSC_5474.jpg)
 - STM32F103 Smart V2 Microcontroller, this microcontroller was used as target that connect every connection with the sensor and LCD. [Link](https://stm32-base.org/assets/img/boards/STM32F103C8T6_STM32_Smart_V2.0-1.jpg)
 - 16 x 2 LCD Screen, used to display value of sensor or anything that can display on LCD screen. [Link](https://5.imimg.com/data5/MU/MN/MY-25117786/16x2-lcd-display-green-500x500.jpg)
@@ -18,16 +19,16 @@ This project is about displaying the value of sensor in LCD screen. The value of
 
 ## :paperclips: Connections
 Connection of target(Smart V2 MCU) and program(Blue Pill MCU) 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/schem.JPG" width="400">
 
 Connection of Temperature sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20schem.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20schem.png" width="400">
 
 Connection of Light Intensity sensor and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20intensity%20schem.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20intensity%20schem.png" width="400">
 
 Connection of LCD and microcontroller(Smart V2 MCU)
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/LCD.png" width="400">
 
 |No. Pin | Function | Name |
 |:----------: |:-----------:|:-----------:|
