@@ -77,7 +77,7 @@ In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of
 - Modify the __io_putchar function by calling the lcdWriteMsg function to display on LCD screen, refer to the code. [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Src/LCD.c)
 - Modify also the initialise_monitor_handles function by adding the following code in the syscalls.c, refer to [Link](http://www.openstm32.org/forumthread1055)
 
-## :partly_sunny: Measure Temperature
+## :thermometer: Measure Temperature
 - Get the ADC value sense from sensor via microcontroller using the HAL library
 
 Calculate temperature from adc value
@@ -156,12 +156,26 @@ Step to initialise the LCD:
 Step to send command:
 1. set Register Select pin to 0 (0 -> send command, 1 -> send data)
 2. set R/W pin to 0 (read -> 1, write -> 0)
-3. send command 
+3. set the Enable pin to 1
+4. delay
+5. send command 
+6. delay
+7. disable the Enable pin by setting it to 0
 
 Step to send message/data:
 1. set Register Select pin to 1 (0 -> send command, 1 -> send data)
 2. set R/W pin to 0 (read -> 1, write -> 0)
-3. send message 
+3. set the Enable pin to 1
+4. delay
+5. send message 
+6. delay
+7. disable the Enable pin by setting it to 0
+
+:warning: If in the begining was choose to send 4 bit data, the data must be __TWICE__, bacause 1 time only can send 4 bit data and the data was 8 bit. If 8 bit mode was chosen, then the data send only __ONCE__. Data must be send after enable signal, after the enable signal must have a delay, because the data need some setup time. 
+
+Below shows the timing diagram of the data:
+
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png)
 
 ## Custom Symbol
 The LCD only have 8 locations 0-7 for custom chars in the CGRAM.
