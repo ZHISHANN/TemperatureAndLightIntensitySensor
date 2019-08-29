@@ -70,7 +70,7 @@ In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of
 - Configure the pin of data to OUTPUT OPEN DRAIN mode, others as OUTPUT PUSH PULL mode
 
 ## Setup in LCD
-<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png" width="400">
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/level%20shifter%20connection.png" width="500">
 
 - Before connect all the pin to LCD from microcontroller, a level shifter needed to connected before connect to LCD from microcontroller.
 - The lower level side of the level shifter connected to the microcontroller and 3.3V, the higher-level side of the level shifter connected to the LCD and 5V. Both sides also need to be connected to ground.
@@ -87,7 +87,7 @@ In pin 3, to adjust the contrast of LCD, a potentiometer was used. The output of
 ## How to use LCD
 First when the LCD was power up and turn on, the pixel on the first row of the LCD screen will light up as shown as below. If you can't see it, adjust the potentiometer until can see the pixel light up. (make sure the LCD was given enough voltage to turn on (2.7V to 5.5V))
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/lcd%20on.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/lcd%20on.png" width="300">
 
 To display on the LCD, first need to initialise the LCD by sending command to LCD. To send command to LCD, need to reset pin 4 of LCD to 0 which is the Register Select pin. If the Register Select was set to 0 its mean send command to LCD, while set to 1 mean send message/data to LCD for display.
 
@@ -123,7 +123,7 @@ Step to send message/data:
 
 Below shows the timing diagram of the data:
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png" width="400">
 
 ## :thermometer: Measure Temperature
 - Get the ADC value sense from sensor via microcontroller using the HAL library
@@ -136,7 +136,7 @@ The variable T is the ambient temperature in Kelvin, T0 is the room temperature,
 
 If the ADC reference voltage (Vref) and voltage divider source voltage (Vs) are the same then the following is true: 
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20formula.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20formula.png" width="400">
 
 where:-
 - adcMax is the adc resolution
@@ -157,11 +157,11 @@ The value of Ravr(theory) was taken from the given table with B constant value o
 The graph was transform to linear graph before finding a suitable B constant value. To transform from non-linear to linear, the y-axis element was plot as **ln y** which is the resistance value. 
 Below shows the formula how to transform from non-linear graph to linear graph. The linear graph was plot using this formula.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png" width="250">
 
 Below shows the graph before and after linearize, and the new B constant was found also which is 3631. Excel file, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/r%20vs%20t.xlsx)
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/linearize%20graph.png" width="400">
 
 ## :bulb: Measure Light Intensity 
 - Get the ADC value sense by the sensor via microcontroller using the HAL library
@@ -176,7 +176,7 @@ The voltage can be adjusted by using a potentiometer. The voltage supply to ligh
 
 To find the intensity, get the actual voltage from the formula given in below and times with the irradiance constant.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20formula.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/light%20formula.png" width="400">
 
 where:-
 
@@ -193,12 +193,12 @@ For 5x10 dots font size, user can only use 1 line to display the created custom 
 
 To display a custom symbol on LCD screen, first sketch a symbol in the form of 8 row and 5 column or 10 row and 5 column, depends on what font size to use. A simple custom symbol was show in below, the __black__ colour box represent _1_, while __white__ colour represent _0_, transform these binary number into a hex form. Then this hex number was saved into CGRAM, and the LCD only can save up to 8 symbols because it only contains 8 locations to save in CGRAM.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/custom%20symbol.png" width="300">
 
 ## :bell: Result
 From the code, this is the result will show.
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG)
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/result.PNG" width="400">
 
 ## :books: References
 1. OPT101 Monolithic Photodiode and Single-Supply Transimpedance Amplifier manual, [Link](http://www.ti.com/lit/ds/symlink/opt101.pdf)
