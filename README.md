@@ -123,20 +123,20 @@ Step to send message/data:
 
 Below shows the timing diagram of the data:
 
-<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%202.png" width="400">
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/timing%20diagram%20.png" width="600">
 
 ## :thermometer: Measure Temperature
 - Get the ADC value sense from sensor via microcontroller using the HAL library
 
 Calculate temperature from adc value
 
-![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20eq.gif)
+![alt text](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20eq.png)
 
 The variable T is the ambient temperature in Kelvin, T0 is the room temperature, in Kelvin (25°C = 298.15K), B is the beta constant, R is the thermistor resistance at the ambient temperature, and Rntc is the thermistor resistance at temperature T0. 
 
 If the ADC reference voltage (Vref) and voltage divider source voltage (Vs) are the same then the following is true: 
 
-<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temp%20formula.png" width="400">
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/temperature%20formula.png" width="500">
 
 where:-
 - adcMax is the adc resolution
@@ -157,7 +157,7 @@ The value of Ravr(theory) was taken from the given table with B constant value o
 The graph was transform to linear graph before finding a suitable B constant value. To transform from non-linear to linear, the y-axis element was plot as **ln y** which is the resistance value. 
 Below shows the formula how to transform from non-linear graph to linear graph. The linear graph was plot using this formula.
 
-<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/graph%20formula.png" width="250">
+<img src="https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/formula%20graph.png" width="250">
 
 Below shows the graph before and after linearize, and the new B constant was found also which is 3631. Excel file, [Link](https://github.com/ZHISHANN/TemperatureAndLightIntensitySensor/blob/master/Image/r%20vs%20t.xlsx)
 
