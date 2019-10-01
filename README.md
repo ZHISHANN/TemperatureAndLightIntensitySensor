@@ -1,4 +1,4 @@
-# :partly_sunny:Temperature and Light Intensity Sensor Implmentation and Display
+# :partly_sunny:Temperature and Light Intensity Sensor Implmentation 
 
 ## :label: Description
 This project is about displaying the value of sensor in LCD screen. The value of sensor was gotten from the GPIO ADC pin of the microcontroller, through ADC (Analog to Digital) the value from sensor in analogue form was change to digital form using the microcontroller. In this project, 2 sensors were used which is temperature sensor and light intensity sensor. The temperature sensor can sense the current temperature while the light intensity sensor will sense the current light intensity value and display on the LCD screen. On the LCD screen, some custom symbol also designed to display on LCD screen.
